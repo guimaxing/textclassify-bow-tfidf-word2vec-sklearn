@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2018/7/8 20:50
-# @Author  : quincyqiang
-# @File    : visual.py
-# @Software: PyCharm
+"""
+Created on Sun Aug 19 14:03:12 2018
+@author: Moc
+"""
 
 import pickle
 import pandas as pd

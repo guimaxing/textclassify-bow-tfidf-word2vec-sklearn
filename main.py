@@ -18,4 +18,4 @@ if __name__ == '__main__':
     tfidf_clf=tfidf(X_train,X_test,y_train,y_test)
 
     X_train_word2vec, X_test_word2vec, y_train_word2vec, y_test_word2vec=load_w2v()
-    word2vec_clf=word2vec(X_train_word2vec, X_test_word2vec, y_train_word2vec, y_test_word2vec)
+    word2vec_clf=word2vec(X_train_word2vec, X_test_word2vec, y_train_word2vec, y_test_word2vec)  #不准

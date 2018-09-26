@@ -41,6 +41,11 @@ def bow(X_train,X_test,y_train,y_test):
     # 文本特征提取
     print("正在提取词袋体征")
     X_train_counts, count_vectorizer = cv(X_train)
+    
+    count_vectorizer_path = 'data/result/count_vectorizer.pkl'
+    with open(count_vectorizer_path, 'wb') as f:
+        pickle.dump(count_vectorizer, f)
+        
     X_test_counts = count_vectorizer.transform(X_test)
     # print(X_train_counts)
     bow_path='data/result/bow.pkl'
@@ -70,7 +75,7 @@ def bow(X_train,X_test,y_train,y_test):
 
 # tfidf
 def tfidf(X_train,X_test,y_train,y_test):
-
+    print("正在提取tfidf体征")
     def tfidf(data):
         tfidf_vectorizer = TfidfVectorizer()
         train = tfidf_vectorizer.fit_transform(data)
@@ -115,17 +120,17 @@ def word2vec(X_train_word2vec, X_test_word2vec, y_train_word2vec, y_test_word2ve
         print("正在加载已经训练的word2vec模型...")
         with open(word2vec_path, 'rb') as out_data:
             clf_wordvec = pickle.load(out_data)
-        return clf_wordvec
+#        return clf_wordvec
     else:
         clf_wordvec = LogisticRegression(C=10.0, solver='newton-cg', multi_class='multinomial', n_jobs=-1)
         clf_wordvec.fit(X_train_word2vec, y_train_word2vec)
-        y_predicted_word2vec = clf_wordvec.predict(X_test_word2vec)
-        accuracy_word2vec, precision_word2vec, recall_word2vec, f1_word2vec = get_metrics(y_test_word2vec,
-                                                                                          y_predicted_word2vec)
-        print("accuracy = %.6f, precision = %.6f, recall = %.6f, f1 = %.6f" % (
-            accuracy_word2vec, precision_word2vec, recall_word2vec, f1_word2vec))
-
         # 保存训练的模型
         with open(word2vec_path, 'wb') as in_data:
             pickle.dump(clf_wordvec, in_data, pickle.HIGHEST_PROTOCOL)
             print("word2vec model saved:" + word2vec_path)
+            
+    y_predicted_word2vec = clf_wordvec.predict(X_test_word2vec)
+    accuracy_word2vec, precision_word2vec, recall_word2vec, f1_word2vec = get_metrics(y_test_word2vec,
+                                                                                      y_predicted_word2vec)
+    print("accuracy = %.6f, precision = %.6f, recall = %.6f, f1 = %.6f" %(
+        accuracy_word2vec, precision_word2vec, recall_word2vec, f1_word2vec))
